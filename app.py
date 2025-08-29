@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate,MessagesPlaceholder
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain,create_history_aware_retriever
-from langchain_chroma import Chroma
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.vectorstores import FAISS
@@ -105,3 +105,4 @@ if user_input:
         )
 
     st.write(response["answer"])
+
