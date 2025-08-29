@@ -8,6 +8,7 @@ from langchain.chains import create_retrieval_chain,create_history_aware_retriev
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain.vectorstores import FAISS
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -47,7 +48,7 @@ if uploaded_files:
 
     text_splitter=RecursiveCharacterTextSplitter(chunk_size=5000,chunk_overlap=500)
     splits=text_splitter.split_documents(documents)
-    vectorstore=Chroma.from_documents(documents=splits,embedding=embeddings)
+    vectorstore=FAISS.from_documents(documents=splits,embedding=embeddings)
     retriver=vectorstore.as_retriever()
 
     contextualize_q_system_prompt=(
@@ -102,4 +103,5 @@ if user_input:
             config={"configurable":{"session_id":session_id}
            }
         )
+
     st.write(response["answer"])
