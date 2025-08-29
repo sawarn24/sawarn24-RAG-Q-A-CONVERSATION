@@ -70,7 +70,7 @@ if uploaded_files:
     system_prompt=(
         "You are a helpful AI assistant that helps people find information"
         "from the provided document context"
-        "if you don't know the answer, just say that you don't know"
+        "if you don't know the answer, just say that you don't know and tell that you can answer only from the pdf nothing else dont answer anything else"
 
         "{context}"
     )
@@ -105,4 +105,5 @@ if user_input:
         )
 
     st.write(response["answer"])
+
 
