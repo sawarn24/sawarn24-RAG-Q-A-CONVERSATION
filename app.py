@@ -7,18 +7,26 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain,create_history_aware_retriever
 
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
 from langchain.vectorstores import FAISS
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
-
+import os
 from dotenv import load_dotenv
+
 load_dotenv()
 groq_api_key=os.getenv("GROQ_API_KEY")
-os.environ["GOOGLE_API_KEY"]=os.getenv("GOOGLE_API_KEY")
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 
-embeddings=GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+HF_TOKEN = os.getenv("HF_TOKEN")
+
+# Use the new HuggingFaceEndpointEmbeddings
+embeddings = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",  # Use a proper embedding model
+    task="feature-extraction",
+    huggingfacehub_api_token=HF_TOKEN
+)
 
 st.title("conversational RAG with PDF upload and chat history")
 
@@ -105,5 +113,6 @@ if user_input:
         )
 
     st.write(response["answer"])
+
 
 
